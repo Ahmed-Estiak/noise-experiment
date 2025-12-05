@@ -11,8 +11,17 @@ args = parser.parse_args()
 dataset = tf.keras.datasets.mnist if args.data_type == 'original' else tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = dataset.load_data()
 
+# Normalize to [0, 1] as float32
+train_images = train_images.astype(np.float32) / 255.0
+test_images = test_images.astype(np.float32) / 255.0
+
+# Add Gaussian noise to training data only
+np.random.seed(0)
+noise = np.random.normal(loc=0.0, scale=0.05, size=train_images.shape)
+train_images_noisy = np.clip(train_images + noise, 0.0, 1.0)
+
 # Flatten images
-train_flat = train_images.reshape(train_images.shape[0], -1)
+train_flat = train_images_noisy.reshape(train_images.shape[0], -1)
 test_flat = test_images.reshape(test_images.shape[0], -1)
 
 
