@@ -21,7 +21,7 @@ x_test = x_test.reshape((x_test.shape[0], 784)).astype('float32') / 255
 
 # Add Gaussian noise to training data only
 np.random.seed(0)
-train_noise = np.random.normal(loc=0.0, scale=0.1, size=x_train.shape)
+train_noise = np.random.normal(loc=0.0, scale=0.08, size=x_train.shape)
 x_train_noisy = np.clip(x_train + train_noise)
 
 y_train_ohe = one_hot_encoder(y_train)
