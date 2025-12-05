@@ -19,6 +19,11 @@ def one_hot_encoder(tags, num_classes=10):
 x_train = x_train.reshape((x_train.shape[0], 784)).astype('float32') / 255  #
 x_test = x_test.reshape((x_test.shape[0], 784)).astype('float32') / 255
 
+# Add Gaussian noise to training data only
+np.random.seed(0)
+train_noise = np.random.normal(loc=0.0, scale=0.1, size=x_train.shape)
+x_train_noisy = np.clip(x_train + train_noise)
+
 y_train_ohe = one_hot_encoder(y_train)
 y_test_ohe = one_hot_encoder(y_test)
 
@@ -34,9 +39,9 @@ model.compile(optimizer=SGD(learning_rate=0.16), loss='categorical_crossentropy'
 
 
 epochs = 20 
-history = model.fit(x_train, y_train_ohe, epochs=epochs, batch_size=16, verbose=0)
+history = model.fit(x_train_noisy, y_train_ohe, epochs=epochs, batch_size=16, verbose=0)
 
-train_loss, train_accuracy = model.evaluate(x_train, y_train_ohe, verbose=0)
+train_loss, train_accuracy = model.evaluate(x_train_noisy, y_train_ohe, verbose=0)
 test_loss, test_accuracy = model.evaluate(x_test, y_test_ohe, verbose=0)
 
 print(f'Accuracy for the training data: {train_accuracy * 100:.2f}%')
