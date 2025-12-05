@@ -36,16 +36,18 @@ model.compile(optimizer=SGD(learning_rate=0.16), loss='categorical_crossentropy'
 epochs = 20 
 history = model.fit(x_train, y_train_ohe, epochs=epochs, batch_size=16, verbose=0)
 
-# the training loss curve
-plt.plot(history.history['loss'], label='Training Loss')
-plt.title('Training Loss Curve')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.legend()
-plt.show()
-
 train_loss, train_accuracy = model.evaluate(x_train, y_train_ohe, verbose=0)
 test_loss, test_accuracy = model.evaluate(x_test, y_test_ohe, verbose=0)
 
 print(f'Accuracy for the training data: {train_accuracy * 100:.2f}%')
 print(f'Accuracy for the test data: {test_accuracy * 100:.2f}%')
+
+# Save the training loss curve instead of blocking on a GUI window
+plt.plot(history.history['loss'], label='Training Loss')
+plt.title('Training Loss Curve')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.savefig('training_loss.png')
+plt.close()
+print('Training loss curve saved to training_loss.png')
