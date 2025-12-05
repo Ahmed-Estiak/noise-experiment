@@ -26,11 +26,12 @@ x_test /= 255.0
 # Define classes and features
 number_classes = 10
 number_features = x_train.shape[1]
+EPSILON = 1e-6  # floor to avoid zero variance
 
 # Function to compute log likelihood
 def compute_log_likelihood(x, class_index):
     mean = means[class_index]
-    variance = variances[class_index]
+    variance = np.maximum(variances[class_index], EPSILON)
     log_likelihood = -0.5 * (np.sum(np.log(2 * np.pi * variance)) + np.sum(((x - mean) ** 2) / variance))
     return log_likelihood
 
