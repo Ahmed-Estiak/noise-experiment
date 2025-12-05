@@ -64,7 +64,7 @@ if args.dataset == 'fashion':
 
     noise2 = np.random.normal(loc=0.0, scale=0.14, size=x_test.shape)
 
-    x_test_noise=x_test + noise2
+    x_test_noise=x_test #+ noise2
 
     # Get predicted classes for this noise level
     predicted_classes = calculate_predictions(x_train_noise, x_test_noise, y_train)
@@ -78,7 +78,7 @@ else:
     x_train_noise = x_train + noise3
     noise4 = np.random.normal(loc=0.0, scale=0.05, size=x_test.shape)
 
-    x_test_noise=x_test + noise4
+    x_test_noise=x_test #+ noise4
     # For original MNIST, no noise is added
     predicted_classes = calculate_predictions(x_train_noise, x_test_noise, y_train)
 
