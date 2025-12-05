@@ -18,11 +18,12 @@ def one_hot_encoder(tags, num_classes=10):
 x_train = x_train.reshape((x_train.shape[0], 784)).astype('float32') / 255.0
 x_test = x_test.reshape((x_test.shape[0], 784)).astype('float32') / 255.0
 
-# Add Gaussian noise to training data only
+# Add Gaussian noise to training and test data
 np.random.seed(0)
-train_noise = np.random.normal(loc=0.0, scale=0.05, size=x_train.shape)
-#x_train_noisy=x_train
+train_noise = np.random.normal(loc=0.0, scale=0.08, size=x_train.shape)
+test_noise = np.random.normal(loc=0.0, scale=0.08, size=x_test.shape)
 x_train_noisy = np.clip(x_train + train_noise)
+x_test_noisy = np.clip(x_test + test_noise)
 
 y_train_ohe = one_hot_encoder(y_train)
 y_test_ohe = one_hot_encoder(y_test)
@@ -38,7 +39,7 @@ epochs = 20
 history = model.fit(x_train_noisy, y_train_ohe, epochs=epochs, batch_size=16, verbose=0)
 
 train_loss, train_accuracy = model.evaluate(x_train_noisy, y_train_ohe, verbose=0)
-test_loss, test_accuracy = model.evaluate(x_test, y_test_ohe, verbose=0)
+test_loss, test_accuracy = model.evaluate(x_test_noisy, y_test_ohe, verbose=0)
 
 print(f'Accuracy for the training data: {train_accuracy * 100:.2f}%')
 print(f'Accuracy for the test data: {test_accuracy * 100:.2f}%')
