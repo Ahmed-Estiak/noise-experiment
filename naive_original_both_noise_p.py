@@ -25,7 +25,7 @@ x_train /= 255.0
 x_test /= 255.0
 
 np.random.seed(0)
-noise = np.random.normal(loc=0.0, scale=0.27, size=x_train.shape)
+noise = np.random.normal(loc=0.0, scale=0.14, size=x_train.shape)
 x_train_noise = x_train + noise
 
 
@@ -57,8 +57,8 @@ def class_acc(pred, gt):
     accuracy = (correct_predictions / len(gt)) * 100
     
     return accuracy
-noise = np.random.normal(loc=0.0, scale=0.05, size=x_test.shape)
-x_test_noise = x_test #+ noise
+noise = np.random.normal(loc=0.0, scale=0.19, size=x_test.shape)
+x_test_noise = x_test + noise
 y_pred = []
 for i in range(x_test.shape[0]):
     log_likelihoods = np.array([compute_log_likelihood(x_test_noise[i], k) for k in range(number_classes)])
