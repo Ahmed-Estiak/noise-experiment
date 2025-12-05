@@ -42,7 +42,7 @@ for k in range(number_classes):
 log_likelihoods = np.zeros((x_test.shape[0], number_classes))
 
 noise = np.random.normal(loc=0.0, scale=0.06, size=x_test.shape)
-x_test_noise = x_test + noise
+x_test_noise = x_test #+ noise
 
 for k in range(number_classes):
     log_likelihoods[:, k] = multivariate_normal.logpdf(x_test_noise, mean=means[k], cov=covariances[k])
